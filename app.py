@@ -10,12 +10,12 @@ from pymongo.cursor import CursorType
 app = Flask(__name__)
 
 # my_client = MongoClient("mongodb://localhost:27017/")
-host = "localhost"
-port = 27017
-my_client = MongoClient(host, port)
+# host = "localhost"
+# port = 27017
+# my_client = MongoClient(host, port)
 
-mydb = my_client['stock02']
-mycol = mydb['sise']
+# mydb = my_client['stock02']
+# mycol = mydb['sise']
 
 @app.route('/')
 def hello():
@@ -31,17 +31,17 @@ def stock_bs4():
         now_price = get_price(item)
         prices.append(now_price)
 
-    mydb.sise.insert_one({'name': '삼성', 'sise': prices[0]})
-    mydb.sise.insert_one({'name': 'sk', 'sise': prices[1]})
-    mydb.sise.insert_one({'name': '현대', 'sise': prices[2]})
+    # mydb.sise.insert_one({'name': '삼성', 'sise': prices[0]})
+    # mydb.sise.insert_one({'name': 'sk', 'sise': prices[1]})
+    # mydb.sise.insert_one({'name': '현대', 'sise': prices[2]})
 
-    list = mycol.find({}, {"_id":0, "name":1, "sise":1})
+    # list = mycol.find({}, {"_id":0, "name":1, "sise":1})
 
-    mysise = []
-    for x in list:
-        mysise.append(x)
+    # mysise = []
+    # for x in list:
+    #     mysise.append(x)
 
-    return render_template("index.html", content=mysise)
+    return render_template("index.html", content=prices)
 
 
 def get_bsoup(company_code):

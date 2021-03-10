@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, jsonify
 
 import requests
 from bs4 import BeautifulSoup
 
-import pymongo
-from pymongo import MongoClient
-from pymongo.cursor import CursorType
+# import pymongo
+# from pymongo import MongoClient
+# from pymongo.cursor import CursorType
 
 app = Flask(__name__)
 
@@ -14,12 +14,16 @@ app = Flask(__name__)
 # port = 27017
 # my_client = MongoClient(host, port)
 
-# mydb = my_client['stock02']
+# username = 'davelee'
+# password = 'korea123'
+# my_client = pymongo.MongoClient('mongodb://%s:%s@www.funcoding.xyz' % (username, password))
+
+# mydb = my_client['stock04']
 # mycol = mydb['sise']
 
 @app.route('/')
-def hello():
-    return 'hello mr.lee'
+def index():
+    return render_template("index.html")
 
 @app.route('/sise')
 def stock_bs4():
@@ -41,7 +45,7 @@ def stock_bs4():
     # for x in list:
     #     mysise.append(x)
 
-    return render_template("index.html", content=prices)
+    return jsonify({'result':'success', 'stocklist':'my test list'})
 
 
 def get_bsoup(company_code):
@@ -53,7 +57,6 @@ def get_bsoup(company_code):
         return bs_obj
     else:
         print(result.status_code)
-
 
 def get_price(company_code):
     bs_obj = get_bsoup(company_code)

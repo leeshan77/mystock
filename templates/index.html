@@ -8,24 +8,32 @@
 </head>
 <body>
 
-  <h3>If you click on the "Hide" button, I will disappear.</h3>
-  <button id="hide">Hide</button>
-  <button id="show">Show</button>
-
-  <ul>
-      {% for title in content %}
-      <p>{{ title }}</p>
-      {% endfor %}
-  </ul>
+  <h1>시세 =</h1>
+  <h2 class="h2-clock"></h2>
 
   <script>
 
-      $("#hide").click(function(){
-        $("h3").hide();
-      });
-      $("#show").click(function(){
-        $("h3").show();
-      });
+    var clock = document.querySelector(".h2-clock");
+    function getTime() {
+        $.ajax({
+           type: "GET",
+           url: "/stock",
+           success:function(res) {
+              if (res) {
+                 var jsonData = JSON.parse(res);
+                 var message = jsonData.stocklist;
+                 clock.innerHTML = message;
+
+              }
+           }
+        });
+    }
+
+    function run_clock() {
+        setInterval(getTime, 3000);
+    }
+
+    run_clock();
 
   </script>
 
